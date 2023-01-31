@@ -4,10 +4,18 @@ import "./App.css";
 const getContentByCid = () => {
   fetch(
     "https://api.estuary.tech/public/by-cid/QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9"
-  ).then(async (res) => {
-    const data = await res.json();
-    console.log(data);
-  })
+  )
+    .then(async (res) => {
+      const data = await res.json();
+      console.log(data);
+    })
+    .then((data) => {
+      data.forEach((e) => {
+        e.deals.forEach((miners) => {
+          console.log(miners.miner);
+        });
+      });
+    });
 };
 
 function App() {
