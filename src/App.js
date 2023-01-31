@@ -24,7 +24,7 @@ const getContentByCid = () => {
         fetch(`https://api.estuary.tech/public/miners/stats/${minerId}`).then(async (res) => {
           let data = await res.json();
           data.chainInfo.addresses.forEach((ipAddress) => {
-            ipAddresses.push(ipAddress.split("/")[1]);
+            ipAddresses.push(ipAddress.split("/")[2]);
           })
         })
       })
