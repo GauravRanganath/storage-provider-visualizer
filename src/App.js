@@ -6,8 +6,7 @@ const getContentByCid = () => {
     "https://api.estuary.tech/public/by-cid/QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9"
   )
     .then(async (res) => {
-      const data = await res.json();
-      console.log(data);
+      return data = await res.json();
     })
     .then((data) => {
       console.log(data);
