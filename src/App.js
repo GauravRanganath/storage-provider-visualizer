@@ -6,10 +6,10 @@ const getContentByCid = () => {
     "https://api.estuary.tech/public/by-cid/QmVrrF7DTnbqKvWR7P7ihJKp4N5fKmBX29m5CHbW9WLep9"
   )
     .then(async (res) => {
-      return data = await res.json();
+      let data = await res.json();
+      return data
     })
     .then((data) => {
-      console.log(data);
       data.forEach((e) => {
         e.deals.forEach((miners) => {
           console.log(miners.miner);
