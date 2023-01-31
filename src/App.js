@@ -1,10 +1,21 @@
 import "./App.css";
 import Globe from "react-globe.gl";
 import { useState } from "react";
+import { useEffect } from "react";
 
 function App() {
   const [arcs, setArcs] = useState([]);
+  const [myLocation, setMyLocation] = useState({});
 
+  useEffect(() => {
+    fetch(`https://ipapi.co/json/`).then((res) =>
+        res.json().then((data) => {
+          console.log(data)
+          setMyLocation(data)
+        })
+      );
+  }, []);
+  
   function getLocations(ipAddress) {
     return new Promise((resolve, reject) => {
       fetch(`https://ipapi.co/${ipAddress}/json/`).then((res) =>
@@ -64,13 +75,11 @@ function App() {
             Promise.all(locationData).then((allLocationData) => {
               console.log(allLocationData);
               let arcBuilder = [];
-              let myLat = 43.6534817
-              let myLong = -79.3839347
 
               allLocationData.forEach((location) => {
                 arcBuilder.push({
-                  startLat: myLat,
-                  startLng: myLong,
+                  startLat: myLocation.latitude,
+                  startLng: myLocation.longitude,
                   endLat: location.latitude,
                   endLng: location.longitude,
                   color: [
@@ -92,14 +101,10 @@ function App() {
 
   const N = 20;
   const arcsData = [...Array(N).keys()].map(() => ({
-    startLat: (Math.random() - 0.5) * 180,
-    startLng: (Math.random() - 0.5) * 360,
-    endLat: (Math.random() - 0.5) * 180,
-    endLng: (Math.random() - 0.5) * 360,
-    color: [
-      ["red", "white", "blue", "green"][Math.round(Math.random() * 3)],
-      ["red", "white", "blue", "green"][Math.round(Math.random() * 3)],
-    ],
+    startLat: (Math.random() - 0.5) * 10,
+    startLng: (Math.random() - 0.5) * 36,
+    endLat: (Math.random() - 0.5) * 18,
+    endLng: (Math.random() - 0.5) * 36,
   }));
 
   return (
@@ -108,10 +113,10 @@ function App() {
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         arcsData={arcs}
-        arcColor={"color"}
-        arcDashLength={() => Math.random()}
+        arcColor={() => "#39FF14"}
+        arcDashLength={0.5}
         arcDashGap={() => Math.random()}
-        arcDashAnimateTime={() => Math.random() * 4000 + 500}
+        arcDashAnimateTime={() => 0.5 * 4000 + 500}
       ></Globe>
     </div>
   );
