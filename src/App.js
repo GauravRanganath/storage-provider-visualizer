@@ -10,12 +10,24 @@ const getContentByCid = () => {
       return data
     })
     .then((data) => {
+      let minerIds = [];
       data.forEach((e) => {
         e.deals.forEach((miners) => {
-          console.log(miners.miner);
+          minerIds.push(miners.miner);
         });
       });
-    });
+      return minerIds
+    })
+    .then((minerIds) => {
+      let ipAddresses = [];
+      minerIds.forEach((minerId) => {
+        fetch(`https://api.estuary.tech/public/miners/stats/${minerId}`).then(async (res) => {
+          let data = await res.json();
+          ipAddresses.push(data.chainInfo.addresses);
+        })
+      })
+      console.log(ipAddresses);
+    })
 };
 
 function App() {
