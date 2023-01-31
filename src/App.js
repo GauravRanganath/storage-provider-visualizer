@@ -10,6 +10,7 @@ const getContentByCid = () => {
       console.log(data);
     })
     .then((data) => {
+      console.log(data);
       data.forEach((e) => {
         e.deals.forEach((miners) => {
           console.log(miners.miner);
