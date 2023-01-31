@@ -1,9 +1,8 @@
-import { resolve } from "path-browserify";
 import "./App.css";
 
 function getLocations(ipAddress) {
   return new Promise((resolve, reject) => {
-    fetch(`http://ip-api.com/json/${ipAddress}`).then((res) =>
+    fetch(`https://ipapi.co/${ipAddress}`).then((res) =>
       res.json().then((data) => {
         resolve(data);
       })
