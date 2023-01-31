@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 const getContentByCid = () => {
@@ -7,7 +6,7 @@ const getContentByCid = () => {
   )
     .then(async (res) => {
       let data = await res.json();
-      return data
+      return data;
     })
     .then((data) => {
       let minerIds = [];
@@ -16,20 +15,22 @@ const getContentByCid = () => {
           minerIds.push(miners.miner);
         });
       });
-      return minerIds
+      return minerIds;
     })
     .then((minerIds) => {
       let ipAddresses = [];
       minerIds.forEach((minerId) => {
-        fetch(`https://api.estuary.tech/public/miners/stats/${minerId}`).then(async (res) => {
-          let data = await res.json();
-          data.chainInfo.addresses.forEach((ipAddress) => {
-            ipAddresses.push(ipAddress.split("/")[2]);
-          })
-        })
-      })
-      console.log(ipAddresses);
-    })
+        fetch(`https://api.estuary.tech/public/miners/stats/${minerId}`).then(
+          async (res) => {
+            let data = await res.json();
+            data.chainInfo.addresses.forEach((ipAddress) => {
+              ipAddresses.push(ipAddress.split("/")[2]);
+            });
+          }
+        );
+      });
+      return ipAddresses;
+    });
 };
 
 function App() {
