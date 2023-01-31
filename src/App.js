@@ -2,7 +2,7 @@ import "./App.css";
 
 function getLocations(ipAddress) {
   return new Promise((resolve, reject) => {
-    fetch(`https://ipapi.co/${ipAddress}`).then((res) =>
+    fetch(`https://ipapi.co/${ipAddress}/json/`).then((res) =>
       res.json().then((data) => {
         resolve(data);
       })
