@@ -21,8 +21,42 @@ h1 {
   color: #39ff14;
 }
 
+h6 {
+  font-family: "Unbounded", cursive;
+  color: #39ff14;
+}
+
 p {
   color: #ffffff;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+}
+
+.btn {
+  font-family: "Unbounded", cursive !important;
+  border-radius: 5px !important;
+  border: 2px solid #39ff14 !important;
+  color: white !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.btn:hover {
+  font-family: "Unbounded", cursive !important;
+  border-radius: 5px !important;
+  border: 2px solid #39ff14 !important;
+  color: white !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: transparent;
 }
 
 .right-panel {
@@ -39,4 +73,25 @@ p {
 
 .panel {
   padding: 0 100px;
+}
+
+.storageProviderInfo {
+  margin-top: 25px;
+  padding: 20px;
+  border: solid 2px #39ff14;
+  border-radius: 5px;
+}
+
+.loadingBanner {
+  font-family: "Unbounded", cursive;
+  color: "#ffffff";
+  font-size: 32px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
 }
