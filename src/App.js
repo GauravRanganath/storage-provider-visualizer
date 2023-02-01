@@ -2,20 +2,25 @@ import "./App.css";
 import Globe from "react-globe.gl";
 import { useState } from "react";
 import { useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 function App() {
+  const [points, setPoints] = useState([]);
   const [arcs, setArcs] = useState([]);
+  const [rings, setRings] = useState([]);
   const [myLocation, setMyLocation] = useState({});
 
   useEffect(() => {
     fetch(`https://ipapi.co/json/`).then((res) =>
-        res.json().then((data) => {
-          console.log(data)
-          setMyLocation(data)
-        })
-      );
+      res.json().then((data) => {
+        console.log(data);
+        setMyLocation(data);
+      })
+    );
   }, []);
-  
+
   function getLocations(ipAddress) {
     return new Promise((resolve, reject) => {
       fetch(`https://ipapi.co/${ipAddress}/json/`).then((res) =>
@@ -74,50 +79,82 @@ function App() {
             });
             Promise.all(locationData).then((allLocationData) => {
               console.log(allLocationData);
+              let pointsBuilder = [];
               let arcBuilder = [];
+              let ringBuilder = [];
 
               allLocationData.forEach((location) => {
+                pointsBuilder.push({
+                  lat: location.latitude,
+                  lng: location.longitude,
+                });
+
                 arcBuilder.push({
-                  startLat: myLocation.latitude,
-                  startLng: myLocation.longitude,
-                  endLat: location.latitude,
-                  endLng: location.longitude,
-                  color: [
-                    ["red", "white", "blue", "green"][
-                      Math.round(Math.random() * 3)
-                    ],
-                    ["red", "white", "blue", "green"][
-                      Math.round(Math.random() * 3)
-                    ],
-                  ],
+                  startLat: location.latitude,
+                  startLng: location.longitude,
+                  endLat: myLocation.latitude,
+                  endLng: myLocation.longitude,
+                });
+
+                ringBuilder.push({
+                  lat: location.latitude,
+                  lng: location.longitude,
                 });
               });
 
-              setArcs(arcBuilder)
+              pointsBuilder.push({
+                lat: myLocation.latitude,
+                lng: myLocation.longitude,
+              });
+
+              ringBuilder.push({
+                lat: myLocation.latitude,
+                lng: myLocation.longitude,
+                maxR: 5,
+                propagationSpeed: 1,
+                repeatPeriod: 100,
+              });
+
+              setPoints(pointsBuilder);
+              setArcs(arcBuilder);
+              setRings(ringBuilder);
             });
           });
       });
   };
 
-  const N = 20;
-  const arcsData = [...Array(N).keys()].map(() => ({
-    startLat: (Math.random() - 0.5) * 10,
-    startLng: (Math.random() - 0.5) * 36,
-    endLat: (Math.random() - 0.5) * 18,
-    endLng: (Math.random() - 0.5) * 36,
-  }));
-
   return (
-    <div>
-      <button onClick={getContentByCid}>Get Content By CID</button>
-      <Globe
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-        arcsData={arcs}
-        arcColor={() => "#39FF14"}
-        arcDashLength={0.5}
-        arcDashGap={() => Math.random()}
-        arcDashAnimateTime={() => 0.5 * 4000 + 500}
-      ></Globe>
+    <div className="parent">
+      <div className="child panel">
+        <h1 style={{ fontSize: "64px" }}>DEOXYS</h1>
+        <p>See where your IPFS data is stored using Estuary's public API</p>
+        <InputGroup style={{ borderColor: "#39ff14" }}>
+          <Form.Control placeholder="Enter CID" />
+          <Button
+            onClick={getContentByCid}
+            variant="outline-secondary"
+            style={{ color: "#39ff14", borderColor: "#39ff14" }}
+          >
+            GO
+          </Button>
+        </InputGroup>
+      </div>
+      <div className="child">
+        <Globe
+          width={window.innerWidth / 2}
+          arcsData={arcs}
+          arcColor={() => "#39FF14"}
+          arcDashLength={0.05}
+          arcDashGap={0.05}
+          arcDashAnimateTime={5000}
+          ringsData={rings}
+          ringColor={() => "#39FF14"}
+          pointAltitude={0.025}
+          pointsData={points}
+          pointColor={() => "#39FF14"}
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        />
+      </div>
     </div>
   );
 }
