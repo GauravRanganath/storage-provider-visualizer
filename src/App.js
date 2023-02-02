@@ -22,7 +22,6 @@ function App() {
   useEffect(() => {
     fetch(`https://ipapi.co/json/`).then((res) =>
       res.json().then((data) => {
-        console.log(data);
         setMyLocation(data);
       })
     );
@@ -156,7 +155,9 @@ function App() {
     <div className="parent">
       <div className="child panel">
         <h1 style={{ fontSize: "64px" }}>DEOXYS</h1>
-        <p className="instructions">SEE WHERE YOUR IPFS DATA IS STORED WITH ESTUARY</p>
+        <p className="instructions">
+          SEE WHERE YOUR IPFS DATA IS STORED WITH ESTUARY
+        </p>
 
         {isLoading === false && (
           <div>
@@ -186,8 +187,9 @@ function App() {
         {pointHover === false && (
           <>
             <br />
+            <p className="instructions">GRAB AND DRAG THE GLOBE.</p>
             <p className="instructions">
-              CLICK ON A MARKER TO VIEW PROVIDER INFO
+              CLICK ON A MARKER TO VIEW PROVIDER INFO.
             </p>
           </>
         )}
