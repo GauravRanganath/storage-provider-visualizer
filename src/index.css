@@ -35,6 +35,10 @@ input {
   padding: 10px;
 }
 
+input:focus {
+  border: solid 2px #39ff14;
+}
+
 .btn {
   font-family: "Unbounded", cursive !important;
   border-radius: 5px !important;
@@ -94,4 +98,8 @@ input {
 
 .column {
   flex: 50%;
+}
+
+.instructions {
+  font-family: "Unbounded", cursive;
 }

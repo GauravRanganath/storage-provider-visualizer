@@ -68,7 +68,10 @@ function App() {
   };
 
   const populateRandomCid = () => {
-    setCid(hardCids[Math.floor(Math.random() * hardCids.length)]);
+    const remainingCids = hardCids.filter(function (currCid) {
+      return currCid !== cid;
+    });
+    setCid(remainingCids[Math.floor(Math.random() * remainingCids.length)]);
   };
 
   const getContentByCid = () => {
@@ -104,9 +107,6 @@ function App() {
               locationData.push(getLocations(ipAddress));
             });
             Promise.all(locationData).then((allLocationData) => {
-              console.log(allLocationData);
-
-              let locationsBuilder = [];
               let pointsBuilder = [];
               let arcBuilder = [];
               let ringBuilder = [];
@@ -130,18 +130,6 @@ function App() {
                   lng: location.longitude,
                   color: "#39FF14",
                 });
-              });
-
-              pointsBuilder.push({
-                lat: myLocation.latitude,
-                lng: myLocation.longitude,
-                color: "#ffffff",
-              });
-
-              ringBuilder.push({
-                lat: myLocation.latitude,
-                lng: myLocation.longitude,
-                color: "#ffffff",
               });
 
               allLocationData.push(myLocation);
@@ -198,11 +186,13 @@ function App() {
         {pointHover === false && (
           <>
             <br />
-            <h6>CLICK ON A STORAGE PROVIDER MARKER TO VIEW INFO</h6>
+            <p className="instructions">
+              CLICK ON A MARKER TO VIEW PROVIDER INFO
+            </p>
           </>
         )}
         {pointHover === true && (
-          <div className="storageProviderInfo">            
+          <div className="storageProviderInfo">
             <h6>GEOLOCATION</h6>
             <div class="row">
               <div class="column">
@@ -231,7 +221,7 @@ function App() {
             <h6>NETWORK DETAILS</h6>
             <div class="row">
               <div class="column">
-              <p>Organization: {clickedLocation.org}</p>
+                <p>Organization: {clickedLocation.org}</p>
               </div>
             </div>
             <div class="row">
@@ -249,7 +239,22 @@ function App() {
       <div className="child">
         <Globe
           width={window.innerWidth / 2}
-          //atmosphereColor={"#39FF14"}
+          labelsData={[
+            {
+              name: "YOU",
+              lat: myLocation.latitude,
+              lng: myLocation.longitude,
+              size: 0.28,
+              color: "white",
+            },
+          ]}
+          labelLat={(d) => d.lat}
+          labelLng={(d) => d.lng}
+          labelText={(d) => d.name}
+          labelSize={(d) => 0.5 + d.size}
+          labelDotRadius={(d) => 0.5 + d.size}
+          labelColor={() => "#ffffff"}
+          labelResolution={2}
           arcsData={arcs}
           arcColor={() => "#39FF14"}
           arcDashLength={0.05}
