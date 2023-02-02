@@ -156,7 +156,7 @@ function App() {
     <div className="parent">
       <div className="child panel">
         <h1 style={{ fontSize: "64px" }}>DEOXYS</h1>
-        <p>See where IPFS data is stored using Estuary's public API</p>
+        <p className="instructions">SEE WHERE YOUR IPFS DATA IS STORED WITH ESTUARY</p>
 
         {isLoading === false && (
           <div>
