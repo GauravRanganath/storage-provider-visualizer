@@ -52,6 +52,7 @@ function App() {
   }
 
   const findLocation = (coords) => {
+    setShowInstructions(false);
     setPointHover(true);
 
     allLocations.forEach((elem) => {
