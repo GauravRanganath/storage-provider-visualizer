@@ -2,9 +2,7 @@ import "./App.css";
 import Globe from "react-globe.gl";
 import { useState } from "react";
 import { useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import InfoIcon from '@mui/icons-material/Info';
 
 function App() {
   const [cid, setCid] = useState(
@@ -18,7 +16,8 @@ function App() {
   const [allLocations, setAllLocations] = useState({});
   const [clickedLocation, setClickedLocation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
+  const [showInstructions, setShowInstructions] = useState(false);
+  
   useEffect(() => {
     fetch(`https://ipapi.co/json/`).then((res) =>
       res.json().then((data) => {
@@ -74,6 +73,7 @@ function App() {
   };
 
   const getContentByCid = () => {
+    setShowInstructions(false);
     setIsLoading(true);
     fetch(`https://api.estuary.tech/public/by-cid/${cid}`)
       .then(async (res) => {
@@ -156,7 +156,10 @@ function App() {
       <div className="child panel">
         <h1 style={{ fontSize: "64px" }}>DEOXYS</h1>
         <p className="instructions">
-          SEE WHERE IPFS DATA IS STORED WITH ESTUARY
+          VISUALIZE IPFS DATA STORAGE
+        </p>
+        <p className="instructions">
+          POWERED BY // <span style={{color: "#39ff14"}}>ESTUARY</span>
         </p>
 
         {isLoading === false && (
@@ -175,8 +178,11 @@ function App() {
             >
               VIEW INFO
             </button>
-            <button className="btn" onClick={populateRandomCid}>
-              USE RANDOM CID
+            <button className="btn" onClick={populateRandomCid} style={{ marginRight: "25px" }}>
+              RANDOM CID
+            </button>
+            <button className="btn" onClick={() => setShowInstructions(!showInstructions)}>
+              HELP
             </button>
           </div>
         )}
@@ -184,12 +190,14 @@ function App() {
         {isLoading === true && (
           <p className="loadingBanner">RETRIEVING . . .</p>
         )}
-        {pointHover === false && (
+        {showInstructions === true && (
           <>
             <br />
-            <p className="instructions">GRAB AND DRAG THE GLOBE.</p>
+            <p className="instructions">1. INPUT CID OR CLICK "<span style={{color: "#39ff14"}}>RANDOM CID</span>" BUTTON</p>
+            <p className="instructions">2. CLICK "<span style={{color: "#39ff14"}}>VIEW INFO</span>" BUTTON</p>
+            <p className="instructions">3. GRAB AND DRAG THE <span style={{color: "#39ff14"}}>GLOBE</span></p>
             <p className="instructions">
-              CLICK ON A MARKER TO VIEW PROVIDER INFO.
+              4. CLICK ON A <span style={{color: "#39ff14"}}>MARKER</span> TO VIEW PROVIDER INFO.
             </p>
           </>
         )}
@@ -264,6 +272,7 @@ function App() {
           arcDashAnimateTime={5000}
           ringsData={rings}
           ringColor={() => "#39FF14"}
+          ringMaxRadius={3}
           pointAltitude={0.025}
           pointsData={points}
           pointRadius={1}
