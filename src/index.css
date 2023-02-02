@@ -103,12 +103,3 @@ input:focus {
 .instructions {
   font-family: "Unbounded", cursive;
 }
-
-@media all and (max-width:800px) {
-    .child
-    {
-        display: block; 
-        float: none; 
-        width: 100%;
-    }
-}
