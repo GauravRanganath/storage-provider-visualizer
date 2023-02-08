@@ -1,3 +1,5 @@
+const { minWidth } = require("@mui/system");
+
 function getLocations(ipAddress) {
   return new Promise((resolve, reject) => {
     fetch(`https://ipapi.co/${ipAddress}/json/`).then((res) =>
@@ -13,11 +15,20 @@ function getIpAddresses(minerId) {
     fetch(`https://api.estuary.tech/public/miners/stats/${minerId}`)
       .then((res) => res.json())
       .then((data) => {
+        let addresses = {}
         let ipAddresses = [];
-        let addresses = data.chainInfo.addresses;
-        addresses.forEach((address) => {
-          ipAddresses.push(address.split("/")[2]);
+        addresses[minerId] = data;
+
+        let storeData = JSON.stringify(addresses) + ",\n";
+
+        const fs = require("fs");
+
+        fs.appendFileSync("Output.txt", storeData, (err) => {
+          if (err) throw err;
         });
+
+        console.log(addresses);
+        ipAddresses.push(addresses);
         resolve(ipAddresses);
       });
   });
@@ -30,21 +41,29 @@ const getAllMiners = () => {
       return data;
     })
     .then((data) => {
-        let minerInfoBuilder = []
+      let minerInfoBuilder = [];
 
       data.forEach((elem) => {
-        let minerInfo = {}
-        minerInfo[elem["addr"]] = elem
-        minerInfoBuilder.push(minerInfo)
+        let minerInfo = {};
+        minerInfo[elem["addr"]] = elem;
+        minerInfoBuilder.push(minerInfo);
       });
 
       return minerInfoBuilder;
-    }).then((minerInfoBuilder) => {
-        let ipAddresses = [];
+    })
+    .then((minerInfoBuilder) => {
+      let ipAddresses = [];
 
-        console.log(minerInfoBuilder)
+      let x = 0
+      let i = 0
+      
+      for (x = 0; x <= 210; x += 5) {
+        for (i = x; i < x+5; i++) {
+          getIpAddresses(Object.keys(minerInfoBuilder[i])[0]);
+        }
+      }
 
-        /*
+      /*
         minerInfoBuilder.forEach((minerId) => {
           ipAddresses.push(getIpAddresses(minerId));
         });
@@ -93,7 +112,7 @@ const getAllMiners = () => {
             });
           });
           */
-      });
+    });
 };
 
 getAllMiners();
