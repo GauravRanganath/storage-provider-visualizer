@@ -3151,7 +3151,7 @@ data = [
 
 function getLocations(ipAddress) {
   return new Promise((resolve, reject) => {
-    fetch(`https://ipapi.co/${ipAddress}/json/?key=VXSbzUovALkldVKCdNqAcmPC4D83h59x3iz13NOtjR4madZyYu`).then((res) =>
+    fetch(`https://ipapi.co/${ipAddress}/json/?key=insert_key_here`).then((res) =>
       res.json().then((data) => {
         console.log(data)
         resolve(data);
