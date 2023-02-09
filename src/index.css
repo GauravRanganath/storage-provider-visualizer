@@ -113,7 +113,7 @@ input:focus {
 
 @media only screen and (max-width: 1000px) {
   .btn-d {
-    font-size: 12;
+    font-size: 12px;
   }
 
   #title {
