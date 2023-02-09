@@ -7835,7 +7835,7 @@ function App() {
   return (
     <div className="parent">
       <div id="one" className="child panel">
-        <h1 id ="title">DEOXYS</h1>
+        <h1 id="title">DEOXYS</h1>
         <p className="instructions">VISUALIZE IPFS DATA STORAGE</p>
         <p className="instructions">
           POWERED BY // <span style={{ color: "#39ff14" }}>ESTUARY</span>
@@ -8099,10 +8099,18 @@ function App() {
           hello), feel free to shoot me a message on any of my socials!
         </Modal.Body>
         <Modal.Footer>
-          <TwitterIcon />
-          <InstagramIcon />
-          <LinkedInIcon />
-          <GitHubIcon />
+          <IconButton href="https://twitter.com/granganath22" target="_blank">
+            <TwitterIcon />
+          </IconButton>
+          <IconButton href="https://www.instagram.com/gauravranganath/" target="_blank">
+            <InstagramIcon />
+          </IconButton>
+          <IconButton href="https://www.linkedin.com/in/gaurav-ranganath/" target="_blank">
+            <LinkedInIcon />
+          </IconButton>
+          <IconButton href="https://github.com/GauravRanganath" target="_blank">
+            <GitHubIcon />
+          </IconButton>
         </Modal.Footer>
       </Modal>
     </div>
