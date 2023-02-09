@@ -114,10 +114,8 @@ input:focus {
 @media only screen and (max-width: 1000px)
 {
     #title {
-      font-size: 12vw;
+      font-size: 42px;
     }
-
-
 
     #one
     {
