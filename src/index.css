@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@900");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 body {
   margin: 0;
@@ -29,7 +29,7 @@ h6 {
 
 p {
   color: #ffffff;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 input {
@@ -111,25 +111,26 @@ input:focus {
   font-size: 64px;
 }
 
-@media only screen and (max-width: 1000px)
-{
-    #title {
-      font-size: 42px;
-    }
+@media only screen and (max-width: 1000px) {
+  .btn-d {
+    font-size: 12;
+  }
 
-    #one
-    {
-        display: block; 
-        float: none; 
-        width: 100%;
-        padding: 5px 15px;
-    }
+  #title {
+    font-size: 42px;
+  }
 
-    #two
-    {
-      display: block; 
-      float: none; 
-      width: 100%;
-      padding: 5px 0;
+  #one {
+    display: block;
+    float: none;
+    width: 100%;
+    padding: 5px 15px;
+  }
+
+  #two {
+    display: block;
+    float: none;
+    width: 100%;
+    padding: 5px 0;
   }
 }
