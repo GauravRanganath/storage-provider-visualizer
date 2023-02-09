@@ -7878,7 +7878,7 @@ function App() {
         {isLoading === true && (
           <p className="loadingBanner">RETRIEVING . . .</p>
         )}
-        {showInstructions === true && (
+        {showInstructions === true && width > breakpoint && (
           <>
             <br />
             <p className="instructions">
