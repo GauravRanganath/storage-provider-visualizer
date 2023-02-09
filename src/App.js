@@ -5,11 +5,12 @@ import { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import InfoIcon from "@mui/icons-material/Info";
 import IconButton from "@mui/material/IconButton";
-import Button from 'react-bootstrap/Button';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Button from "react-bootstrap/Button";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { SizeMe } from "react-sizeme";
 
 let dataMinerInfo = {
   f066596: {
@@ -7588,9 +7589,25 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
   const [show, setShow] = useState(false);
+  // Declare a new state variable with the "useState" Hook
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 620;
+
+  useEffect(() => {
+    /* Inside of a "useEffect" hook add an event listener that updates
+       the "width" state variable when the window size changes */
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+
+    /* passing an empty array as the dependencies of the effect will cause this
+       effect to only run when the component mounts, and not each time it updates.
+       We only want the listener to be added once */
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleScreenSize = () => {
+    return window.innerWidth / 2;
+  };
 
   let pointsBuilder = [];
   let arcBuilder = [];
@@ -7937,41 +7954,80 @@ function App() {
       </div>
 
       <div id="two" className="child">
-        <Globe
-          width={window.innerWidth / 2}
-          labelsData={[
-            {
-              name: "YOU",
-              lat: myLocation.latitude,
-              lng: myLocation.longitude,
-              size: 0.28,
-              color: "white",
-            },
-          ]}
-          labelLat={(d) => d.lat}
-          labelLng={(d) => d.lng}
-          labelText={(d) => d.name}
-          labelSize={(d) => 0.5 + d.size}
-          labelDotRadius={(d) => 0.5 + d.size}
-          labelColor={() => "#ffffff"}
-          labelResolution={2}
-          arcsData={arcs}
-          arcColor={() => "#39FF14"}
-          arcDashLength={0.05}
-          arcDashGap={0.05}
-          arcDashAnimateTime={5000}
-          ringsData={rings}
-          ringColor={() => "#39FF14"}
-          ringMaxRadius={3}
-          pointAltitude={0.025}
-          pointsData={points}
-          pointRadius={1}
-          pointColor={() => "#39FF14"}
-          onPointClick={(coords) => {
-            findLocation(coords);
-          }}
-          globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-        />
+        {width >= breakpoint && (
+          <Globe
+            width={window.innerWidth / 2}
+            labelsData={[
+              {
+                name: "YOU",
+                lat: myLocation.latitude,
+                lng: myLocation.longitude,
+                size: 0.28,
+                color: "white",
+              },
+            ]}
+            labelLat={(d) => d.lat}
+            labelLng={(d) => d.lng}
+            labelText={(d) => d.name}
+            labelSize={(d) => 0.5 + d.size}
+            labelDotRadius={(d) => 0.5 + d.size}
+            labelColor={() => "#ffffff"}
+            labelResolution={2}
+            arcsData={arcs}
+            arcColor={() => "#39FF14"}
+            arcDashLength={0.05}
+            arcDashGap={0.05}
+            arcDashAnimateTime={5000}
+            ringsData={rings}
+            ringColor={() => "#39FF14"}
+            ringMaxRadius={3}
+            pointAltitude={0.025}
+            pointsData={points}
+            pointRadius={1}
+            pointColor={() => "#39FF14"}
+            onPointClick={(coords) => {
+              findLocation(coords);
+            }}
+            globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+          />
+        )}
+        {width < breakpoint && (
+          <Globe
+            width={window.innerWidth}
+            labelsData={[
+              {
+                name: "YOU",
+                lat: myLocation.latitude,
+                lng: myLocation.longitude,
+                size: 0.28,
+                color: "white",
+              },
+            ]}
+            labelLat={(d) => d.lat}
+            labelLng={(d) => d.lng}
+            labelText={(d) => d.name}
+            labelSize={(d) => 0.5 + d.size}
+            labelDotRadius={(d) => 0.5 + d.size}
+            labelColor={() => "#ffffff"}
+            labelResolution={2}
+            arcsData={arcs}
+            arcColor={() => "#39FF14"}
+            arcDashLength={0.05}
+            arcDashGap={0.05}
+            arcDashAnimateTime={5000}
+            ringsData={rings}
+            ringColor={() => "#39FF14"}
+            ringMaxRadius={3}
+            pointAltitude={0.025}
+            pointsData={points}
+            pointRadius={1}
+            pointColor={() => "#39FF14"}
+            onPointClick={(coords) => {
+              findLocation(coords);
+            }}
+            globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+          />
+        )}
       </div>
 
       <Modal show={show} onHide={handleClose} centered size="lg">
@@ -8001,8 +8057,8 @@ function App() {
           content, and manage files stored on IPFS.
           <br />
           <br />
-          I've tried to make this app as intuitive as possible.
-          Here are some instructions to get you started:
+          I've tried to make this app as intuitive as possible. Here are some
+          instructions to get you started:
           <br />
           <br />
           <ol>

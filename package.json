@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.22.10",
     "react-scripts": "5.0.1",
+    "react-sizeme": "^3.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
