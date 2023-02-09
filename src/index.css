@@ -107,13 +107,31 @@ input:focus {
   font-size: 1em;
 }
 
+#title {
+  font-size: 64px;
+}
+
 @media only screen and (max-width: 1000px)
 {
-    #one, #two
+    #title {
+      font-size: 12vw;
+    }
+
+
+
+    #one
     {
         display: block; 
         float: none; 
         width: 100%;
-        padding: 5px 0;
+        padding: 5px 15px;
     }
+
+    #two
+    {
+      display: block; 
+      float: none; 
+      width: 100%;
+      padding: 5px 0;
+  }
 }

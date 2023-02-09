@@ -7835,7 +7835,7 @@ function App() {
   return (
     <div className="parent">
       <div id="one" className="child panel">
-        <h1 style={{ fontSize: "4.5vw" }}>DEOXYS</h1>
+        <h1 id ="title">DEOXYS</h1>
         <p className="instructions">VISUALIZE IPFS DATA STORAGE</p>
         <p className="instructions">
           POWERED BY // <span style={{ color: "#39ff14" }}>ESTUARY</span>
