@@ -7993,7 +7993,7 @@ function App() {
         )}
         {width < breakpoint && (
           <Globe
-            width={window.innerWidth}
+            width={window.innerWidth *0.9}
             labelsData={[
               {
                 name: "YOU",
