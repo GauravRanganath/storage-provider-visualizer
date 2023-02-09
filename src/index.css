@@ -35,6 +35,7 @@ p {
 input {
   width: 100%;
   padding: 10px;
+  max-width: 510px;
 }
 
 input:focus {
@@ -107,6 +108,26 @@ input:focus {
   font-size: 1em;
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  text-align: right;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.footer-icon {
+  color: white;
+}
+
+.footer-icon:hover {
+  color: #39ff14;
+}
+
 #title {
   font-size: 64px;
 }
@@ -132,5 +153,9 @@ input:focus {
     float: none;
     width: 100%;
     padding: 5px 0;
+  }
+
+  .footer {
+    text-align: center;
   }
 }

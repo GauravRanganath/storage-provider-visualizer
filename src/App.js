@@ -10,7 +10,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { SizeMe } from "react-sizeme";
 
 let dataMinerInfo = {
   f066596: {
@@ -7589,18 +7588,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
   const [show, setShow] = useState(false);
-  // Declare a new state variable with the "useState" Hook
   const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 620;
 
   useEffect(() => {
-    /* Inside of a "useEffect" hook add an event listener that updates
-       the "width" state variable when the window size changes */
     window.addEventListener("resize", () => setWidth(window.innerWidth));
-
-    /* passing an empty array as the dependencies of the effect will cause this
-       effect to only run when the component mounts, and not each time it updates.
-       We only want the listener to be added once */
   }, []);
 
   const handleClose = () => setShow(false);
@@ -7833,287 +7825,319 @@ function App() {
   ];
 
   return (
-    <div className="parent">
-      <div id="one" className="child panel">
-        <h1 id="title">DEOXYS</h1>
-        <p className="instructions">VISUALIZE IPFS DATA STORAGE</p>
-        <p className="instructions">
-          POWERED BY // <span style={{ color: "#39ff14" }}>ESTUARY</span>
-        </p>
+    <>
+      <div className="parent">
+        <div id="one" className="child panel">
+          <h1 id="title">DEOXYS</h1>
+          <p className="instructions">VISUALIZE IPFS DATA STORAGE</p>
+          <p className="instructions">
+            POWERED BY // <span style={{ color: "#39ff14" }}>ESTUARY</span>
+          </p>
 
-        {isLoading === false && (
-          <div>
-            <input
-              value={cid}
-              onChange={handleCidChange}
-              placeholder="Enter CID"
-            />
-            <br />
-            <br />
-            <button
-              className="btn-d"
-              onClick={retrieveInfo}
-              style={{ marginRight: "25px" }}
-            >
-              VIEW INFO
-            </button>
-            <button
-              className="btn-d"
-              onClick={populateRandomCid}
-              style={{ marginRight: "25px" }}
-            >
-              RANDOM CID
-            </button>
-            <IconButton onClick={handleShow} sx={{ padding: "0px" }}>
-              <InfoIcon
-                sx={{
-                  color: "#ffffff",
-                  fontSize: "32px",
-                }}
+          {isLoading === false && (
+            <div>
+              <input
+                value={cid}
+                onChange={handleCidChange}
+                placeholder="Enter CID"
               />
-            </IconButton>
-          </div>
-        )}
+              <br />
+              <br />
+              <button
+                className="btn-d"
+                onClick={retrieveInfo}
+                style={{ marginRight: "25px" }}
+              >
+                VIEW INFO
+              </button>
+              <button
+                className="btn-d"
+                onClick={populateRandomCid}
+                style={{ marginRight: "25px" }}
+              >
+                RANDOM CID
+              </button>
+              <IconButton onClick={handleShow} sx={{ padding: "0px" }}>
+                <InfoIcon
+                  sx={{
+                    color: "#ffffff",
+                    fontSize: "32px",
+                  }}
+                />
+              </IconButton>
+            </div>
+          )}
 
-        {isLoading === true && (
-          <p className="loadingBanner">RETRIEVING . . .</p>
-        )}
-        {showInstructions === true && width > breakpoint && (
-          <>
+          {isLoading === true && (
+            <p className="loadingBanner">RETRIEVING . . .</p>
+          )}
+          {showInstructions === true && width > breakpoint && (
+            <>
+              <br />
+              <p className="instructions">
+                1. INPUT CID OR CLICK "
+                <span style={{ color: "#39ff14" }}>RANDOM CID</span>" BUTTON
+              </p>
+              <p className="instructions">
+                2. CLICK "<span style={{ color: "#39ff14" }}>VIEW INFO</span>"
+                BUTTON
+              </p>
+              <p className="instructions">
+                3. GRAB AND DRAG THE{" "}
+                <span style={{ color: "#39ff14" }}>GLOBE</span>
+              </p>
+              <p className="instructions">
+                4. CLICK ON A <span style={{ color: "#39ff14" }}>MARKER</span>{" "}
+                TO VIEW PROVIDER INFO.
+              </p>
+            </>
+          )}
+          {pointHover === true && (
+            <div className="storageProviderInfo">
+              <h6>MINER</h6>
+              <div class="row">
+                <div class="column">
+                  <p>ID: {clickedLocation.miner}</p>
+                </div>
+                <div class="column">
+                  <p>Name: {clickedLocation.name}</p>
+                </div>
+              </div>
+              <h6>GEOLOCATION</h6>
+              <div class="row">
+                <div class="column">
+                  <p>City: {clickedLocation.geoLocationData.city}</p>
+                </div>
+                <div class="column">
+                  <p>Region: {clickedLocation.geoLocationData.region}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="column">
+                  <p>Country: {clickedLocation.geoLocationData.country_name}</p>
+                </div>
+                <div class="column">
+                  <p>Timezone: {clickedLocation.geoLocationData.timezone}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="column">
+                  <p>Latitude: {clickedLocation.geoLocationData.latitude}</p>
+                </div>
+                <div class="column">
+                  <p>Longitude: {clickedLocation.geoLocationData.longitude}</p>
+                </div>
+              </div>
+              <h6>NETWORK DETAILS</h6>
+              <div class="row">
+                <div class="column">
+                  <p>Organization: {clickedLocation.geoLocationData.org}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="column">
+                  <p>IP: {clickedLocation.geoLocationData.ip}</p>
+                </div>
+                <div class="column">
+                  <p>Network: {clickedLocation.geoLocationData.network}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div id="two" className="child">
+          {width >= breakpoint && (
+            <Globe
+              width={window.innerWidth / 2}
+              labelsData={[
+                {
+                  name: "YOU",
+                  lat: myLocation.latitude,
+                  lng: myLocation.longitude,
+                  size: 0.28,
+                  color: "white",
+                },
+              ]}
+              labelLat={(d) => d.lat}
+              labelLng={(d) => d.lng}
+              labelText={(d) => d.name}
+              labelSize={(d) => 0.5 + d.size}
+              labelDotRadius={(d) => 0.5 + d.size}
+              labelColor={() => "#ffffff"}
+              labelResolution={2}
+              arcsData={arcs}
+              arcColor={() => "#39FF14"}
+              arcDashLength={0.05}
+              arcDashGap={0.05}
+              arcDashAnimateTime={5000}
+              ringsData={rings}
+              ringColor={() => "#39FF14"}
+              ringMaxRadius={3}
+              pointAltitude={0.025}
+              pointsData={points}
+              pointRadius={1}
+              pointColor={() => "#39FF14"}
+              onPointClick={(coords) => {
+                findLocation(coords);
+              }}
+              globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+            />
+          )}
+          {width < breakpoint && (
+            <Globe
+              width={window.innerWidth}
+              height={window.innerWidth}
+              labelsData={[
+                {
+                  name: "YOU",
+                  lat: myLocation.latitude,
+                  lng: myLocation.longitude,
+                  size: 0.28,
+                  color: "white",
+                },
+              ]}
+              labelLat={(d) => d.lat}
+              labelLng={(d) => d.lng}
+              labelText={(d) => d.name}
+              labelSize={(d) => 0.5 + d.size}
+              labelDotRadius={(d) => 0.5 + d.size}
+              labelColor={() => "#ffffff"}
+              labelResolution={2}
+              arcsData={arcs}
+              arcColor={() => "#39FF14"}
+              arcDashLength={0.05}
+              arcDashGap={0.05}
+              arcDashAnimateTime={5000}
+              ringsData={rings}
+              ringColor={() => "#39FF14"}
+              ringMaxRadius={3}
+              pointAltitude={0.025}
+              pointsData={points}
+              pointRadius={1}
+              pointColor={() => "#39FF14"}
+              onPointClick={(coords) => {
+                findLocation(coords);
+              }}
+              globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+            />
+          )}
+        </div>
+
+        <Modal show={show} onHide={handleClose} centered size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>Hey there, my name's Gaurav 👋</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            First of all... thanks so much for checking out Deoxys! Deoxys is a
+            side project I've poured quite a bit of time into and something I'm
+            really proud to have built. If you're not familiar with web3, you
+            might be confused by what this app does. That's okay! A month ago I
+            would've be in the same boat. 😛
             <br />
-            <p className="instructions">
-              1. INPUT CID OR CLICK "
-              <span style={{ color: "#39ff14" }}>RANDOM CID</span>" BUTTON
-            </p>
-            <p className="instructions">
-              2. CLICK "<span style={{ color: "#39ff14" }}>VIEW INFO</span>"
-              BUTTON
-            </p>
-            <p className="instructions">
-              3. GRAB AND DRAG THE{" "}
-              <span style={{ color: "#39ff14" }}>GLOBE</span>
-            </p>
-            <p className="instructions">
-              4. CLICK ON A <span style={{ color: "#39ff14" }}>MARKER</span> TO
-              VIEW PROVIDER INFO.
-            </p>
-          </>
-        )}
-        {pointHover === true && (
-          <div className="storageProviderInfo">
-            <h6>MINER</h6>
-            <div class="row">
-              <div class="column">
-                <p>ID: {clickedLocation.miner}</p>
-              </div>
-              <div class="column">
-                <p>Name: {clickedLocation.name}</p>
-              </div>
-            </div>
-            <h6>GEOLOCATION</h6>
-            <div class="row">
-              <div class="column">
-                <p>City: {clickedLocation.geoLocationData.city}</p>
-              </div>
-              <div class="column">
-                <p>Region: {clickedLocation.geoLocationData.region}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="column">
-                <p>Country: {clickedLocation.geoLocationData.country_name}</p>
-              </div>
-              <div class="column">
-                <p>Timezone: {clickedLocation.geoLocationData.timezone}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="column">
-                <p>Latitude: {clickedLocation.geoLocationData.latitude}</p>
-              </div>
-              <div class="column">
-                <p>Longitude: {clickedLocation.geoLocationData.longitude}</p>
-              </div>
-            </div>
-            <h6>NETWORK DETAILS</h6>
-            <div class="row">
-              <div class="column">
-                <p>Organization: {clickedLocation.geoLocationData.org}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="column">
-                <p>IP: {clickedLocation.geoLocationData.ip}</p>
-              </div>
-              <div class="column">
-                <p>Network: {clickedLocation.geoLocationData.network}</p>
-              </div>
-            </div>
-          </div>
-        )}
+            <br />
+            Deoxys visualizes files stored on the InterPlanetary File System
+            (IPFS) 🌎. IPFS is a way of sharing files on the internet without
+            relying on a central server. Instead, files are given unique
+            addresses (CIDs), and stored on a network of computers around the
+            world. This means that no single company or organization controls
+            the data, making it more secure and resilliant.
+            <br />
+            <br />
+            Deoxys uses Estuary to find out where files are located. Estuary is
+            a web-based interface created by Protocol Labs 🚀 to make it easier
+            for users to access and interact with IPFS-hosted content. It
+            provides a simple and intuitive way to explore the IPFS network,
+            view and share content, and manage files stored on IPFS.
+            <br />
+            <br />
+            I've tried to make this app as intuitive as possible. Here are some
+            instructions to get you started:
+            <br />
+            <br />
+            <ol>
+              <li>
+                If you have a particular CID you'd like to use, enter it into
+                the input box. If you don't, that's okay! Click the "Random CID"
+                button and one should populate the input box for you.
+              </li>
+              <li>
+                Click "View Info" and wait for Deoxys to locate where your file
+                is stored.
+              </li>
+              <li>
+                You should see the globe on the right hand start to populate
+                green markers with arcs flowing into wherever you're located.
+              </li>
+              <li>
+                The globe is interactive! Use your mouse to rotate it and check
+                out where your file is stored.
+              </li>
+              <li>
+                If you want more detailed information on a location, click on
+                the marker and you'll see miner, geolocation, and network
+                details pop up right under the input box and buttons.
+              </li>
+            </ol>
+            Deoxys operates on a best-effort model, meaning that I can't
+            guarantee that the information you see is 100% accurate, or complete
+            🙅💯. Some miners may have missing ids, sometimes a location may be
+            off, but I promise that I've done my best to make things as accurate
+            as possible.
+            <br />
+            <br />
+            That's it! Thanks again for checking out Deoxys. If you've got the
+            time or are interested more in who I am, check out my Github,
+            LinkedIn, Instagram, or Twitter. I'm always looking for another
+            project to build, so if you've got any ideas (or just want to say
+            hello), feel free to shoot me a message on any of my socials!
+          </Modal.Body>
+          <Modal.Footer>
+            <IconButton href="https://twitter.com/granganath22" target="_blank">
+              <TwitterIcon />
+            </IconButton>
+            <IconButton
+              href="https://www.instagram.com/gauravranganath/"
+              target="_blank"
+            >
+              <InstagramIcon />
+            </IconButton>
+            <IconButton
+              href="https://www.linkedin.com/in/gaurav-ranganath/"
+              target="_blank"
+            >
+              <LinkedInIcon />
+            </IconButton>
+            <IconButton
+              href="https://github.com/GauravRanganath"
+              target="_blank"
+            >
+              <GitHubIcon />
+            </IconButton>
+          </Modal.Footer>
+        </Modal>
       </div>
-
-      <div id="two" className="child">
-        {width >= breakpoint && (
-          <Globe
-            width={window.innerWidth / 2}
-            labelsData={[
-              {
-                name: "YOU",
-                lat: myLocation.latitude,
-                lng: myLocation.longitude,
-                size: 0.28,
-                color: "white",
-              },
-            ]}
-            labelLat={(d) => d.lat}
-            labelLng={(d) => d.lng}
-            labelText={(d) => d.name}
-            labelSize={(d) => 0.5 + d.size}
-            labelDotRadius={(d) => 0.5 + d.size}
-            labelColor={() => "#ffffff"}
-            labelResolution={2}
-            arcsData={arcs}
-            arcColor={() => "#39FF14"}
-            arcDashLength={0.05}
-            arcDashGap={0.05}
-            arcDashAnimateTime={5000}
-            ringsData={rings}
-            ringColor={() => "#39FF14"}
-            ringMaxRadius={3}
-            pointAltitude={0.025}
-            pointsData={points}
-            pointRadius={1}
-            pointColor={() => "#39FF14"}
-            onPointClick={(coords) => {
-              findLocation(coords);
-            }}
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-          />
-        )}
-        {width < breakpoint && (
-          <Globe
-            width={window.innerWidth}
-            height={window.innerWidth}
-            labelsData={[
-              {
-                name: "YOU",
-                lat: myLocation.latitude,
-                lng: myLocation.longitude,
-                size: 0.28,
-                color: "white",
-              },
-            ]}
-            labelLat={(d) => d.lat}
-            labelLng={(d) => d.lng}
-            labelText={(d) => d.name}
-            labelSize={(d) => 0.5 + d.size}
-            labelDotRadius={(d) => 0.5 + d.size}
-            labelColor={() => "#ffffff"}
-            labelResolution={2}
-            arcsData={arcs}
-            arcColor={() => "#39FF14"}
-            arcDashLength={0.05}
-            arcDashGap={0.05}
-            arcDashAnimateTime={5000}
-            ringsData={rings}
-            ringColor={() => "#39FF14"}
-            ringMaxRadius={3}
-            pointAltitude={0.025}
-            pointsData={points}
-            pointRadius={1}
-            pointColor={() => "#39FF14"}
-            onPointClick={(coords) => {
-              findLocation(coords);
-            }}
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-          />
-        )}
+      <div class="footer">
+        <IconButton href="https://twitter.com/granganath22" target="_blank">
+          <TwitterIcon className="footer-icon" />
+        </IconButton>
+        <IconButton
+          href="https://www.instagram.com/gauravranganath/"
+          target="_blank"
+        >
+          <InstagramIcon className="footer-icon" />
+        </IconButton>
+        <IconButton
+          href="https://www.linkedin.com/in/gaurav-ranganath/"
+          target="_blank"
+        >
+          <LinkedInIcon className="footer-icon" />
+        </IconButton>
+        <IconButton href="https://github.com/GauravRanganath" target="_blank">
+          <GitHubIcon className="footer-icon" />
+        </IconButton>
       </div>
-
-      <Modal show={show} onHide={handleClose} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Hey there, my name's Gaurav 👋</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          First of all... thanks so much for checking out Deoxys! Deoxys is a
-          side project I've poured quite a bit of time into and something I'm
-          really proud to have built. If you're not familiar with web3, you
-          might be confused by what this app does. That's okay! A month ago I
-          would've be in the same boat. 😛
-          <br />
-          <br />
-          Deoxys visualizes files stored on the InterPlanetary File System
-          (IPFS) 🌎. IPFS is a way of sharing files on the internet without
-          relying on a central server. Instead, files are given unique addresses
-          (CIDs), and stored on a network of computers around the world. This
-          means that no single company or organization controls the data, making
-          it more secure and resilliant.
-          <br />
-          <br />
-          Deoxys uses Estuary to find out where files are located. Estuary is a
-          web-based interface created by Protocol Labs 🚀 to make it easier for
-          users to access and interact with IPFS-hosted content. It provides a
-          simple and intuitive way to explore the IPFS network, view and share
-          content, and manage files stored on IPFS.
-          <br />
-          <br />
-          I've tried to make this app as intuitive as possible. Here are some
-          instructions to get you started:
-          <br />
-          <br />
-          <ol>
-            <li>
-              If you have a particular CID you'd like to use, enter it into the
-              input box. If you don't, that's okay! Click the "Random CID"
-              button and one should populate the input box for you.
-            </li>
-            <li>
-              Click "View Info" and wait for Deoxys to locate where your file is
-              stored.
-            </li>
-            <li>
-              You should see the globe on the right hand start to populate green
-              markers with arcs flowing into wherever you're located.
-            </li>
-            <li>
-              The globe is interactive! Use your mouse to rotate it and check
-              out where your file is stored.
-            </li>
-            <li>
-              If you want more detailed information on a location, click on the
-              marker and you'll see miner, geolocation, and network details pop
-              up right under the input box and buttons.
-            </li>
-          </ol>
-          Deoxys operates on a best-effort model, meaning that I can't guarantee
-          that the information you see is 100% accurate, or complete 🙅💯. Some
-          miners may have missing ids, sometimes a location may be off, but I
-          promise that I've done my best to make things as accurate as possible.
-          <br />
-          <br />
-          That's it! Thanks again for checking out Deoxys. If you've got the
-          time or are interested more in who I am, check out my Github,
-          LinkedIn, Instagram, or Twitter. I'm always looking for another
-          project to build, so if you've got any ideas (or just want to say
-          hello), feel free to shoot me a message on any of my socials!
-        </Modal.Body>
-        <Modal.Footer>
-          <IconButton href="https://twitter.com/granganath22" target="_blank">
-            <TwitterIcon />
-          </IconButton>
-          <IconButton href="https://www.instagram.com/gauravranganath/" target="_blank">
-            <InstagramIcon />
-          </IconButton>
-          <IconButton href="https://www.linkedin.com/in/gaurav-ranganath/" target="_blank">
-            <LinkedInIcon />
-          </IconButton>
-          <IconButton href="https://github.com/GauravRanganath" target="_blank">
-            <GitHubIcon />
-          </IconButton>
-        </Modal.Footer>
-      </Modal>
-    </div>
+    </>
   );
 }
 
