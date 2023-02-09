@@ -41,28 +41,28 @@ input:focus {
   border: solid 2px #39ff14;
 }
 
-.btn {
+.btn-d {
   font-family: "Unbounded", cursive !important;
   border-radius: 5px !important;
   border: 2px solid #39ff14 !important;
   color: white !important;
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
+  padding: 10px !important;
   font-size: 16px;
   cursor: pointer;
   background-color: transparent;
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-duration: 0.2s;
 }
 
-.btn:hover {
+.btn-d:hover {
   font-family: "Unbounded", cursive !important;
   border-radius: 5px !important;
   border: 2px solid #39ff14 !important;
-  color: white !important;
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
+  color: #000011 !important;
+  padding: 10px !important;
   font-size: 16px;
   cursor: pointer;
-  background-color: transparent;
+  background-color: #39ff14;
 }
 
 .right-panel {
@@ -104,4 +104,15 @@ input:focus {
 
 .instructions {
   font-family: "Unbounded", cursive;
+}
+
+@media only screen and (max-width: 1000px)
+{
+    #one, #two
+    {
+        display: block; 
+        float: none; 
+        width: 100%;
+        padding: 20px 0;
+    }
 }

@@ -2,6 +2,14 @@ import "./App.css";
 import Globe from "react-globe.gl";
 import { useState } from "react";
 import { useEffect } from "react";
+import Modal from "react-bootstrap/Modal";
+import InfoIcon from "@mui/icons-material/Info";
+import IconButton from "@mui/material/IconButton";
+import Button from 'react-bootstrap/Button';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 let dataMinerInfo = {
   f066596: {
@@ -7578,7 +7586,11 @@ function App() {
   const [myLocation, setMyLocation] = useState({});
   const [clickedLocation, setClickedLocation] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showInstructions, setShowInstructions] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   let pointsBuilder = [];
   let arcBuilder = [];
@@ -7612,11 +7624,12 @@ function App() {
 
           if (addresses !== null) {
             addresses.forEach((address) => {
-              console.log(address)
-              console.log(address.split("/")[2])
-  
-              const regexExp = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
-  
+              console.log(address);
+              console.log(address.split("/")[2]);
+
+              const regexExp =
+                /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
+
               if (regexExp.test(address.split("/")[2])) {
                 ipAddresses.push(address.split("/")[2]);
               }
@@ -7629,7 +7642,6 @@ function App() {
   }
 
   const findLocation = (coords) => {
-    setShowInstructions(false);
     setPointHover(true);
 
     for (let key in dataMinerInfo) {
@@ -7637,6 +7649,7 @@ function App() {
         dataMinerInfo[key].geoLocationData.latitude === coords.lat &&
         dataMinerInfo[key].geoLocationData.longitude === coords.lng
       ) {
+        setShowInstructions(false);
         setClickedLocation(dataMinerInfo[key]);
       }
     }
@@ -7654,7 +7667,6 @@ function App() {
   };
 
   const getContentByCid = () => {
-    setShowInstructions(false);
     setIsLoading(true);
     fetch(`https://api.estuary.tech/public/by-cid/${cid}`)
       .then(async (res) => {
@@ -7719,8 +7731,7 @@ function App() {
             Promise.all(locationData)
               .then((allLocationData) => {
                 allLocationData.forEach((location, index) => {
-
-                  console.log(location)
+                  console.log(location);
                   pointsBuilder.push({
                     lat: location.latitude,
                     lng: location.longitude,
@@ -7740,8 +7751,8 @@ function App() {
                     color: "#FFFF00",
                   });
 
-                  if (Object.keys(location).includes("error")){
-                    console.log(location)
+                  if (Object.keys(location).includes("error")) {
+                    console.log(location);
                   } else {
                     dataMinerInfo[index] = {
                       miner: "???",
@@ -7778,7 +7789,7 @@ function App() {
                         timezone: location.timezone,
                         org: location.org,
                       },
-                    }
+                    };
                   }
                 });
               })
@@ -7801,12 +7812,12 @@ function App() {
     "bafybeidtrl2wlaxotxavwowzdpnau7ftki2n4z6kebifmerowyijq5wosi",
     "QmaWeZ1fmo2CjWwaW67jQocXP5aNYpV1zwipitz47vTrbH",
     "QmTA4Mf2qJ3qFcPSqkGKRSBUtepHKE5zjAiuCmZ4VwXwT2",
-    "Qmad6w4R5657hGgZcjqnWEpJGGLUSEh7X2jSVkFb1YPjQb"
+    "Qmad6w4R5657hGgZcjqnWEpJGGLUSEh7X2jSVkFb1YPjQb",
   ];
 
   return (
     <div className="parent">
-      <div className="child panel">
+      <div id="one" className="child panel">
         <h1 style={{ fontSize: "64px" }}>DEOXYS</h1>
         <p className="instructions">VISUALIZE IPFS DATA STORAGE</p>
         <p className="instructions">
@@ -7823,25 +7834,27 @@ function App() {
             <br />
             <br />
             <button
-              className="btn"
+              className="btn-d"
               onClick={retrieveInfo}
               style={{ marginRight: "25px" }}
             >
               VIEW INFO
             </button>
             <button
-              className="btn"
+              className="btn-d"
               onClick={populateRandomCid}
               style={{ marginRight: "25px" }}
             >
               RANDOM CID
             </button>
-            <button
-              className="btn"
-              onClick={() => setShowInstructions(!showInstructions)}
-            >
-              HELP
-            </button>
+            <IconButton onClick={handleShow} sx={{ padding: "0px" }}>
+              <InfoIcon
+                sx={{
+                  color: "#ffffff",
+                  fontSize: "32px",
+                }}
+              />
+            </IconButton>
           </div>
         )}
 
@@ -7923,7 +7936,7 @@ function App() {
         )}
       </div>
 
-      <div className="child">
+      <div id="two" className="child">
         <Globe
           width={window.innerWidth / 2}
           labelsData={[
@@ -7960,6 +7973,81 @@ function App() {
           globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         />
       </div>
+
+      <Modal show={show} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Hey there, my name's Gaurav 👋</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          First of all... thanks so much for checking out Deoxys! Deoxys is a
+          side project I've poured quite a bit of time into and something I'm
+          really proud to have built. If you're not familiar with web3, you
+          might be confused by what this app does. That's okay! A month ago I
+          would've be in the same boat. 😛
+          <br />
+          <br />
+          Deoxys visualizes files stored on the InterPlanetary File System
+          (IPFS) 🌎. IPFS is a way of sharing files on the internet without
+          relying on a central server. Instead, files are given unique addresses
+          (CIDs), and stored on a network of computers around the world. This
+          means that no single company or organization controls the data, making
+          it more secure and resilliant.
+          <br />
+          <br />
+          Deoxys uses Estuary to find out where files are located. Estuary is a
+          web-based interface created by Protocol Labs 🚀 to make it easier for
+          users to access and interact with IPFS-hosted content. It provides a
+          simple and intuitive way to explore the IPFS network, view and share
+          content, and manage files stored on IPFS.
+          <br />
+          <br />
+          I've tried to make this app as intuitive as possible.
+          Here are some instructions to get you started:
+          <br />
+          <br />
+          <ol>
+            <li>
+              If you have a particular CID you'd like to use, enter it into the
+              input box. If you don't, that's okay! Click the "Random CID"
+              button and one should populate the input box for you.
+            </li>
+            <li>
+              Click "View Info" and wait for Deoxys to locate where your file is
+              stored.
+            </li>
+            <li>
+              You should see the globe on the right hand start to populate green
+              markers with arcs flowing into wherever you're located.
+            </li>
+            <li>
+              The globe is interactive! Use your mouse to rotate it and check
+              out where your file is stored.
+            </li>
+            <li>
+              If you want more detailed information on a location, click on the
+              marker and you'll see miner, geolocation, and network details pop
+              up right under the input box and buttons.
+            </li>
+          </ol>
+          Deoxys operates on a best-effort model, meaning that I can't guarantee
+          that the information you see is 100% accurate, or complete 🙅💯. Some
+          miners may have missing ids, sometimes a location may be off, but I
+          promise that I've done my best to make things as accurate as possible.
+          <br />
+          <br />
+          That's it! Thanks again for checking out Deoxys. If you've got the
+          time or are interested more in who I am, check out my Github,
+          LinkedIn, Instagram, or Twitter. I'm always looking for another
+          project to build, so if you've got any ideas (or just want to say
+          hello), feel free to shoot me a message on any of my socials!
+        </Modal.Body>
+        <Modal.Footer>
+          <TwitterIcon />
+          <InstagramIcon />
+          <LinkedInIcon />
+          <GitHubIcon />
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
