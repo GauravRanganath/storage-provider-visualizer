@@ -8036,17 +8036,19 @@ function App() {
             would've be in the same boat. 😛
             <br />
             <br />
-            Deoxys visualizes files stored on the InterPlanetary File System
-            (IPFS) 🌎. IPFS is a way of sharing files on the internet without
-            relying on a central server. Instead, files are given unique
-            addresses (CIDs), and stored on a network of computers around the
-            world. This means that no single company or organization controls
-            the data, making it more secure and resilliant.
+            Deoxys visualizes files stored on the{" "}
+            <a href="https://ipfs.tech/">InterPlanetary File System</a> (IPFS)
+            🌎. IPFS is a way of sharing files on the internet without relying
+            on a central server. Instead, files are given unique addresses
+            (CIDs), and stored on a network of computers around the world. This
+            means that no single company or organization controls the data,
+            making it more secure and resilliant.
             <br />
             <br />
-            Deoxys uses Estuary to find out where files are located. Estuary is
-            a web-based interface created by Protocol Labs 🚀 to make it easier
-            for users to access and interact with IPFS-hosted content. It
+            Deoxys uses <a href="https://estuary.tech/">Estuary</a> to find out
+            where files are located. Estuary is a web-based interface created by{" "}
+            <a href="https://protocol.ai/">Protocol Labs</a> 🚀 to make it
+            easier for users to access and interact with IPFS-hosted content. It
             provides a simple and intuitive way to explore the IPFS network,
             view and share content, and manage files stored on IPFS.
             <br />
